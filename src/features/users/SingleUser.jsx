@@ -48,7 +48,7 @@ const SingleUser = () => {
     
 
     return (
-        <section className='max-w-7x flex flex-col items-center mx-auto gap-2 py-5'>
+        <section className='max-w-7xl flex flex-col items-center mx-auto gap-2 py-5'>
             { content }
         </section>
     )

@@ -96,7 +96,7 @@ export const postsSlice = apiSlice.injectEndpoints (
                                 }
                             )
 
-                            // modify cached users : 
+                            // update cached users : 
                             return postsAdapter.setAll ( initialState , responseData ) ; 
                         } , 
 
@@ -105,7 +105,9 @@ export const postsSlice = apiSlice.injectEndpoints (
                             ...result.ids.map ( id => ({ type : 'POST' , id }) )
                         ]
                     }
-                )
+                ) ,
+
+                // create a new post: 
             }
         )
     }
