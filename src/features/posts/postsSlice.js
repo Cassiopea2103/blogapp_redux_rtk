@@ -60,6 +60,51 @@ export const postsSlice = apiSlice.injectEndpoints (
                             ...result.ids.map ( id => ({ type : 'POST' , id }) )
                         ]
                     }
+                ) , 
+
+                // fetch posts by user id : 
+                fetchPostsByUser : builder.query (
+                    {
+                        query : ({ userId }) => (
+                            {
+                                url : `/posts/?userId=${userId}` ,
+                                method : 'GET' ,
+                            }
+                        ) ,
+                        // transform response ( date and reactions ) : 
+                        transformResponse : responseData => {
+                            responseData.map (
+                                userPost => {
+                                    // add date if not present : 
+                                    let min = 1 ; 
+                                    if ( !userPost.date ) {
+                                        userPost.date = sub ( new Date () , { minutes : min ++ } ).toISOString () ; 
+                                    }
+
+                                    // add reactions if not exist : 
+                                    if ( !userPost.reactions ) {
+                                        userPost.reactions = {
+                                            'like' : 0 , 
+                                            'love' : 0 , 
+                                            'funny' : 0 , 
+                                            'insightful' : 0 
+                                        }
+                                    }
+
+                                    // return the transform item : 
+                                    return userPost ; 
+                                }
+                            )
+
+                            // modify cached users : 
+                            return postsAdapter.setAll ( initialState , responseData ) ; 
+                        } , 
+
+                        // invalidate tags : 
+                        providesTags : ( result , error , arg ) => [
+                            ...result.ids.map ( id => ({ type : 'POST' , id }) )
+                        ]
+                    }
                 )
             }
         )
@@ -70,6 +115,7 @@ export const postsSlice = apiSlice.injectEndpoints (
 // slice hooks : 
 export const {
     useFetchPostsQuery ,
+    useFetchPostsByUserQuery
 } = postsSlice ;
 
 // query posts result object : 
