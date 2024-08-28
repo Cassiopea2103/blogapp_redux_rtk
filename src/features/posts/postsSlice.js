@@ -84,10 +84,10 @@ export const postsSlice = apiSlice.injectEndpoints (
                                     // add reactions if not exist : 
                                     if ( !userPost.reactions ) {
                                         userPost.reactions = {
-                                            'like' : 0 , 
-                                            'love' : 0 , 
-                                            'funny' : 0 , 
-                                            'insightful' : 0 
+                                            like : 0 , 
+                                            love : 0 , 
+                                            funny : 0 , 
+                                            insightful : 0 
                                         }
                                     }
 
@@ -108,6 +108,35 @@ export const postsSlice = apiSlice.injectEndpoints (
                 ) ,
 
                 // create a new post: 
+                createNewPost : builder.mutation (
+                    {
+                        query : ( requestData ) => (
+                            {
+                                url : '/posts' , 
+                                metod : 'POST' , 
+                                body : {
+                                    ...requestData , 
+                                    // convert id to number : 
+                                    id : Number ( requestData.id ) , 
+                                    // convert userId to number : 
+                                    userId : Number ( requestData.userId ) ,
+                                    // add date : 
+                                    date : new Date ().toISOString () , 
+                                    // add reactions : 
+                                    reactions : {
+                                        like : 0 , 
+                                        love : 0 , 
+                                        funny : 0 , 
+                                        insightful : 0 
+                                    }
+                                }
+                            }
+                        ) , 
+                        invalidatesTags : ( result , error , arg ) => [
+                            { type : "POST" , id : 'LIST' }
+                        ]
+                    }
+                )
             }
         )
     }
