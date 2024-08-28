@@ -29,6 +29,8 @@ export const postsSlice = apiSlice.injectEndpoints (
                             let min = 1 ; 
                             const loadedPosts = responseData.map ( 
                                 ( post ) => {
+                                    // convert id type to Number : 
+                                    post.id = Number ( post.id ) ; 
                                     // add date to posts : 
                                     if ( !post?.date ) {
                                         post.date = sub ( new Date () , { minutes : min } ).toISOString () ;
