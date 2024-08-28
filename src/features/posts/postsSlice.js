@@ -127,6 +127,7 @@ const selectPostsData = createSelector (
     posts => posts.data // returns only data from fetched posts ...
 )
 
+
 // posts adapter selector based on memoized selector : 
 export const {
     selectAll : selectAllPosts , 

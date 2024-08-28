@@ -11,8 +11,7 @@ const Header = () => {
 
                     <div>
                         <ul className="flex gap-4 justify-between">
-                            <li><Link to={'/posts'} className="hover:text-cyan-400">Posts</Link></li>
-                            <li><Link to={'/users'} className="hover:text-cyan-400">Users</Link></li>
+                            <li><Link to={'/users'} className="hover:text-cyan-400">Users List</Link></li>
                         </ul>
                     </div>
                  

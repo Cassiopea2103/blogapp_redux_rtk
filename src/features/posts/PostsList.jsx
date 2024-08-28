@@ -14,7 +14,7 @@ const PostsList = () => {
     if ( isSuccess ) {
         content = posts.ids.map ( postId  => <SinglePost key = { postId } post = { posts.entities [ postId ]} /> )
     }
-    else if ( isError ) content = <h1 className='text-red-500'>{error}</h1> 
+    else if ( isError ) content = <h1 className='text-red-500'>{error.message}</h1> 
 
 
     return (

@@ -8,7 +8,7 @@ const usersAdapter = createEntityAdapter ({}) ;
 const initialState = usersAdapter.getInitialState ({}) ;
 
 // injected endpoints to apiSlice : 
-const usersSlice = apiSlice.injectEndpoints (
+export const usersSlice = apiSlice.injectEndpoints (
     {
         endpoints : ( builder ) => (
             {
@@ -21,7 +21,7 @@ const usersSlice = apiSlice.injectEndpoints (
                                 method : 'GET'
                             }
                         ) , 
-                        transformREsponse : responseData => {
+                        transformResponse : responseData => {
                             responseData.map (
                                 user => {
                                     // convert its id to number : 
@@ -49,7 +49,8 @@ const queryResult = usersSlice.endpoints.fetchUsers.select() ;
 
 // memoized fetch users data selector : 
 const selectUsersData = createSelector (
-    queryResult => queryResult.data 
+    queryResult , 
+    users => users.data
 )
 
 // users adapter selectors based on memoized data : 

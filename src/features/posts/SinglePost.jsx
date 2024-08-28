@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
-import PostCreationTime from '../../components/posts/PostCrationTime' ; 
-import ReactionButtons from '../../components/posts/ReactionButtons'
+import { PostAuthor, PostCreationTime , ReactionButtons } from "../../components/posts";
 
 const SinglePost = ( { post }) => {
     return (
@@ -9,7 +8,7 @@ const SinglePost = ( { post }) => {
             <h1 className="font-bold text-xl"><Link to={`/posts/${post.id}`} className="hover:text-cyan-700">{ post.title }</Link></h1>
             <p className="leading-relaxed">{ post.body.substring ( 0 , 200 ) }...</p>
             <div className="flex justify-between">
-                <Link>@Post author</Link>
+                <Link to={`/users/${post.userId}`} className="hover:text-cyan-700 "><PostAuthor userId = { post.userId }/></Link>
                 <PostCreationTime  date = { post.date } />
             </div>
             <ReactionButtons post = { post }/>
