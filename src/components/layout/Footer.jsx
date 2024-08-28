@@ -9,7 +9,7 @@ const Footer = () => {
                     <Link to={'https://www.linkedin.com/in/cassiopea21/'} target="_blank" className="hover:text-cyan-400">cassiopea</Link>
                 </strong>
             </span>
-            <span>27-04-2024 , All right reserved &copy;</span>
+            <span>27-04-2024 , <i>All right reserved &copy;</i></span>
         </footer>
     )
 }
