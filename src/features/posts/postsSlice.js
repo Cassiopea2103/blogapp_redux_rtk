@@ -113,7 +113,7 @@ export const postsSlice = apiSlice.injectEndpoints (
                         query : ( requestData ) => (
                             {
                                 url : '/posts' , 
-                                metod : 'POST' , 
+                                method : 'POST' , 
                                 body : {
                                     ...requestData , 
                                     // convert id to number : 
@@ -134,7 +134,8 @@ export const postsSlice = apiSlice.injectEndpoints (
                         ) , 
                         invalidatesTags : ( result , error , arg ) => [
                             { type : "POST" , id : 'LIST' }
-                        ]
+                        ] , 
+                        transformResponse : data => { console.log ( data )}
                     }
                 )
             }
@@ -146,7 +147,8 @@ export const postsSlice = apiSlice.injectEndpoints (
 // slice hooks : 
 export const {
     useFetchPostsQuery ,
-    useFetchPostsByUserQuery
+    useFetchPostsByUserQuery , 
+    useCreateNewPostMutation , 
 } = postsSlice ;
 
 // query posts result object : 
