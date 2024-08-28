@@ -137,7 +137,29 @@ export const postsSlice = apiSlice.injectEndpoints (
                         ] , 
                         transformResponse : data => { console.log ( data )}
                     }
-                )
+                ) , 
+
+                // update post : 
+                updatePost : builder.mutation (
+                    {
+                        query : requestData => (
+                            {
+                                url : `/posts/${ requestData.id }` , 
+                                method : 'PUT' , 
+                                body : {
+                                    ...requestData , 
+                                    // update date : 
+                                    date : new Date ().toISOString () 
+                                }
+                            }
+                        ) , 
+                        invalidatesTags : ( result , error , arg ) => [
+                            { type : 'POST' , id : arg.id }
+                        ]
+                    }
+                ) , 
+
+                // delete post : 
             }
         )
     }
@@ -149,6 +171,7 @@ export const {
     useFetchPostsQuery ,
     useFetchPostsByUserQuery , 
     useCreateNewPostMutation , 
+    useUpdatePostMutation , 
 } = postsSlice ;
 
 // query posts result object : 

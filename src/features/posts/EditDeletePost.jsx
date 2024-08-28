@@ -1,29 +1,31 @@
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
-import { selectPostIds } from "./postsSlice";
+import { selectPostById } from "./postsSlice";
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faRefresh , faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useParams  } from "react-router-dom";
 
-import { useCreateNewPostMutation } from "./postsSlice";
+import { useUpdatePostMutation } from "./postsSlice";
 
-const NewPost = () => {
-
+const EditDeletePost = () => {
+    
     const navigate = useNavigate () ; 
 
+    // retrieve post id from request params : 
+    const { postId } = useParams () ; 
+    // get post with given id : 
+    const post = useSelector ( state => selectPostById ( state , Number ( postId ) ) ) ; 
     // retrieve users : 
     const users = useSelector ( state => selectAllUsers ( state ) ) ; 
-    // retrieve post ids : 
-    const postIds = useSelector ( state => selectPostIds ( state ) ) ; 
 
     // temporary state : 
-    const [ userId , setUserId ] = useState ( '' ) ; 
-    const [ title , setTitle ] = useState ( '' ) ; 
-    const [ body , setBody ] = useState ( '' ) ; 
+    const [ userId , setUserId ] = useState ( post.userId ) ; 
+    const [ title , setTitle ] = useState ( post.title ) ; 
+    const [ body , setBody ] = useState ( post.body ) ; 
 
     // state change handle : 
     const onUserIdChange = e => setUserId ( e.target.value ) ; 
@@ -37,21 +39,16 @@ const NewPost = () => {
         )
     )
 
-    // get create post method from mutation : 
-    const [ createPost , { isLoading } ] = useCreateNewPostMutation () ;
-    
+    // update post mutation : 
+    const [ updatePost , { isLoading } ] = useUpdatePostMutation () ; 
     // can create post condition : 
-    const canSave = [ userId , title , body ].every ( Boolean ) && !isLoading ; 
+    const canSave = [ userId , title , body ].every ( Boolean ) && !isLoading  ; 
 
     // submit handle function : 
-    const handleSubmit= async ( ) => {
-
-        // post id : 
-        const postId = postIds.length ? postIds.length +1 : 1 ; 
-
+    const handleUpdate= async () => { 
         if ( canSave ) {
             // await post creation : 
-            await createPost ( { id : postId , userId , title , body } ) ; 
+            await updatePost ( { id : postId , userId , title , body  } ) ; 
 
             // reset state values : 
             setUserId ( '' ) ; 
@@ -61,12 +58,15 @@ const NewPost = () => {
             // navigate to posts list : 
             navigate ( '/' ) ; 
         }
-        
+    }
+
+    const handleDelete = async () => {
+
     }
 
 
     return <section className='max-w-2xl flex flex-col items-center mx-auto gap-4 py-10 px-32 w-full'>
-                <h1 className="text-3xl font-bold font-serif">Create a New Post</h1>
+                <h1 className="text-3xl font-bold font-serif">Edit or Delete Post</h1>
 
                 <form className="flex flex-col gap-4 w-full mx-auto" >
                     <div className="w-full bg-slate-200 ">
@@ -103,10 +103,15 @@ const NewPost = () => {
                         </textarea>
                     </div>
 
-                    <div>
-                        <button disabled = { !canSave } className={`w-full ml-auto  text-white px-2 py-2 rounded-md flex justify-between items-center ${ canSave ? 'bg-teal-600 cursor-pointer' : 'bg-slate-400'}`} onClick = { handleSubmit }>
-                            <span>Create Post</span>
-                            <FontAwesomeIcon icon = { faUpload } />
+                    <div className="flex gap-4 ">
+                        <button disabled = { !canSave } className={`w-full ml-auto  text-white px-2 py-2 rounded-md flex justify-between items-center ${ canSave ? 'bg-green-800 cursor-pointer' : 'bg-slate-400'}`} onClick = { handleUpdate }>
+                            <span>Update</span>
+                            <FontAwesomeIcon icon = { faRefresh } />
+                        </button>
+
+                        <button disabled = { !canSave } className={`w-full ml-auto  text-white px-2 py-2 rounded-md flex justify-between items-center bg-red-700`} onClick = { handleDelete }>
+                            <span>Delete</span>
+                            <FontAwesomeIcon icon = { faTrash } />
                         </button>
                     </div>
                 </form>
@@ -114,4 +119,4 @@ const NewPost = () => {
             </section>
 }
 
-export default NewPost ; 
+export default EditDeletePost ; 
