@@ -5,6 +5,7 @@ import Layout from "./components/layout/" ;
 import PostsList from './features/posts/PostsList' ; 
 
 import SingleUser from "./features/users/SingleUser";
+import UsersList from "./features/users/UsersList";
 
 const App = () => {
     return (
@@ -17,7 +18,7 @@ const App = () => {
                 </Route>
 
                 <Route path = "/users" >
-                    {/* <Route index element = { <Users /> } /> */}
+                    <Route index element = { <UsersList /> } />
                     <Route path=":userId" element = { <SingleUser /> } />
                 </Route>
             </Route>
