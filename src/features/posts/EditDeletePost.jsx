@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
-import { selectPostById } from "./postsSlice";
+import { selectPostById , useFetchPostsQuery } from "./postsSlice";
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +9,11 @@ import { faRefresh , faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { useNavigate , useParams  } from "react-router-dom";
 
-import { useUpdatePostMutation } from "./postsSlice";
+import { useUpdatePostMutation , useDeletePostMutation } from "./postsSlice";
 
 const EditDeletePost = () => {
+
+    const { data: posts } = useFetchPostsQuery () ;
     
     const navigate = useNavigate () ; 
 
@@ -41,6 +43,9 @@ const EditDeletePost = () => {
 
     // update post mutation : 
     const [ updatePost , { isLoading } ] = useUpdatePostMutation () ; 
+    // delete post mutation : 
+    const [ deletePost ] = useDeletePostMutation () ; 
+
     // can create post condition : 
     const canSave = [ userId , title , body ].every ( Boolean ) && !isLoading  ; 
 
@@ -61,7 +66,9 @@ const EditDeletePost = () => {
     }
 
     const handleDelete = async () => {
+        await deletePost ( { id : postId } ).unwrap () ; 
 
+        navigate ('/')
     }
 
 

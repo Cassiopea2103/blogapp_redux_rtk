@@ -135,7 +135,6 @@ export const postsSlice = apiSlice.injectEndpoints (
                         invalidatesTags : ( result , error , arg ) => [
                             { type : "POST" , id : 'LIST' }
                         ] , 
-                        transformResponse : data => { console.log ( data )}
                     }
                 ) , 
 
@@ -160,6 +159,20 @@ export const postsSlice = apiSlice.injectEndpoints (
                 ) , 
 
                 // delete post : 
+                deletePost : builder.mutation ( 
+                    {
+                        query : ( { id } ) => (
+                            {
+                                url : `/posts/${id}` , 
+                                method : 'DELETE' , 
+                                body : { id }
+                            }
+                        ) , 
+                        invalidatesTags : ( result , error , arg ) => [
+                            { type : 'POST' , id : arg.id }
+                        ]
+                    }
+                )
             }
         )
     }
@@ -172,6 +185,7 @@ export const {
     useFetchPostsByUserQuery , 
     useCreateNewPostMutation , 
     useUpdatePostMutation , 
+    useDeletePostMutation , 
 } = postsSlice ;
 
 // query posts result object : 

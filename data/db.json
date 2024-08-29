@@ -34,12 +34,6 @@
       "body": "Ansible is a powerful tool for automating IT infrastructure, enabling DevOps teams to manage large-scale deployments efficiently."
     },
     {
-      "id": "2",
-      "userId": 1,
-      "title": "The Importance of Infrastructure as Code",
-      "body": "Infrastructure as Code allows teams to manage and provision infrastructure through code, making it easier to automate and scale."
-    },
-    {
       "id": "3",
       "userId": 1,
       "title": "Securing Ansible Playbooks",
@@ -172,24 +166,24 @@
       "body": "Next.js enhances React by enabling server-side rendering, improving performance and SEO for web applications."
     },
     {
-      "id": "25",
-      "userId": 5,
-      "title": "Using TypeScript with React",
-      "body": "TypeScript adds static typing to JavaScript, making React code more predictable and easier to debug."
-    },
-    {
-      "id": "26",
-      "userId": 1,
-      "title": "oitejaoi",
-      "body": "oiwjtojetesting",
-      "date": "2024-08-28T23:04:18.163Z"
-    },
-    {
-      "id": "27",
+      "id": 25,
       "userId": 2,
-      "title": "groot",
-      "body": "groot",
-      "date": "2024-08-28T21:56:46.229Z",
+      "title": "ptoajte",
+      "body": "oiwtjtw",
+      "date": "2024-08-29T08:43:09.749Z",
+      "reactions": {
+        "like": 0,
+        "love": 0,
+        "funny": 0,
+        "insightful": 0
+      }
+    },
+    {
+      "id": 25,
+      "userId": 3,
+      "title": "oijriojt",
+      "body": "gijoirwj",
+      "date": "2024-08-29T08:43:23.484Z",
       "reactions": {
         "like": 0,
         "love": 0,

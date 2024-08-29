@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
-import { selectPostIds } from "./postsSlice";
+import { useFetchPostsQuery } from "./postsSlice";
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,10 +15,12 @@ const NewPost = () => {
 
     const navigate = useNavigate () ; 
 
+    const { data:posts} = useFetchPostsQuery() ; 
+
     // retrieve users : 
     const users = useSelector ( state => selectAllUsers ( state ) ) ; 
     // retrieve post ids : 
-    const postIds = useSelector ( state => selectPostIds ( state ) ) ; 
+    const postIds = posts.ids ; 
 
     // temporary state : 
     const [ userId , setUserId ] = useState ( '' ) ; 
@@ -47,7 +49,7 @@ const NewPost = () => {
     const handleSubmit= async ( ) => {
 
         // post id : 
-        const postId = postIds.length ? postIds.length +1 : 1 ; 
+        const postId = postIds.length ? postIds.length + 1 : 1 ; 
 
         if ( canSave ) {
             // await post creation : 
